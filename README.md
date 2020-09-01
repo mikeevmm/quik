@@ -22,11 +22,11 @@ bash install.sh
 quik --help
 ```
 
-## Support
-
-💕 If you liked quik, consider [buying me a coffee](https://www.paypal.me/miguelmurca/2.50).
-
 ## License
 
 This tool is licensed under an MIT license.
 See LICENSE for details.
+
+## Support
+
+💕 If you liked quik, consider [buying me a coffee](https://www.paypal.me/miguelmurca/2.50).
