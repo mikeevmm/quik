@@ -2,7 +2,7 @@
 
 Go somewhere, quik.
 
-quik let's you define bookmarked directories to quickly go to.
+quik lets you define bookmarked directories to quickly go to.
 For example:
 
 ```bash
