@@ -1,0 +1,5 @@
+.*
+!.gitignore
+!.gitinclude
+internals/__pycache__/
+quik.json
