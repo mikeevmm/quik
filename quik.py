@@ -60,7 +60,7 @@ EDIT_FEEDBACK = lambda alias, old, new: f"""Changed {alias} from
 to
 {ALIAS_ASSIGN(alias, new)}"""
 REMOVE_FEEDBACK = lambda alias, old: f"""Excluded {alias}, used to point to
-{ALIAS_ASSINGED(alias, old)}"""
+{ALIAS_ASSIGN(alias, old)}"""
 CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
 
@@ -128,7 +128,7 @@ if __name__ == '__main__':
         alias[new_alias] = directory
 
         # Give the user some feedback
-        print(ALIAS_ASSIGN(alias, directory))
+        print(ALIAS_ASSIGN(new_alias, directory))
 
         # Write to json file
         quik_json["alias"] = alias
