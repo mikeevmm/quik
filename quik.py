@@ -4,6 +4,7 @@
 Usage:
     quik <alias>
     quik add [--force] <alias> <path> 
+    quik add <alias>
     quik --list
     quik edit [--force] <alias> <new_path>
     quik remove <alias>
@@ -110,7 +111,10 @@ if __name__ == '__main__':
     if arguments['add']:
         # Register a new alias
         user_dir = arguments['<path>']
-        directory = os.path.abspath(arguments['<path>'])
+        if arguments['<path>']:
+            directory = os.path.abspath(arguments['<path>'])
+        else:
+            directory = os.path.abspath(".")
         new_alias = arguments['<alias>']
         force = arguments['--force']
 
