@@ -65,7 +65,7 @@ CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="quik 2.0")
+    arguments = docopt(__doc__, version="quik 2.1")
 
     # Check that quik.json exists, and load it into a json object
     quik_json_loc = os.environ.get("QUIK_JSON",
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     elif arguments['--list']:
         # List all existing aliases
         for alias_name, alias_dir in alias.items():
-            print(f"\"{alias_name}\": \"{alias_dir}\"")
+            print(ALIAS_ASSIGN(alias_name, alias_dir))
     elif arguments['edit'] or arguments['remove']:
         # Edit an existing alias
         edit_alias = arguments['<alias>']
