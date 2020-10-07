@@ -65,9 +65,13 @@ REMOVE_FEEDBACK = lambda alias, old: f"""Excluded {alias}, used to point to
 CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
 
-if __name__ == '__main__':
-    arguments = docopt(__doc__, version="quik 2.1")
 
+def get_quik_json():
+    """Get a dictionary-parsed version of the JSON file specifying the aliases.
+    
+    Returns:
+        quik JSON as dictionary
+    """
     # Check that quik.json exists, and load it into a json object
     quik_json_loc = os.environ.get("QUIK_JSON",
                                    os.path.join(os.path.basename(__file__), "quik.json"))
@@ -79,13 +83,25 @@ if __name__ == '__main__':
     with open(quik_json_loc) as quik_json_io:
         quik_json = json.load(quik_json_io)
 
+    return quik_json
+
+
+def get_aliases(quik_json):
+    """Load the aliases in the JSON file.
+    
+    Arguments:
+        quik_json   [dict] A parsed JSON file specifying the aliases, per the specification.
+
+    Returns:
+        Dictionary of aliases
+    """
     # Check the version
     if "version" not in quik_json:
         print(NO_JSON_VER)
     elif quik_json["version"] != EXPECTED_JSON_VERSION:
         print(WRONG_JSON_VER(quik_json["version"], EXPECTED_JSON_VERSION))
 
-    # Load the aliases from the json
+    # Perform the parsing
     alias = {}
     if "alias" not in quik_json:
         print(NO_ALIAS_IN_JSON)
@@ -105,6 +121,18 @@ if __name__ == '__main__':
         if not os.path.exists(alias_path):
             print(BAD_PATH_IN_JSON(json_alias, alias_path))
         alias[json_alias] = alias_path
+
+    # Done
+    return alias
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__, version="quik 2.1")
+
+    quik_json = get_quik_json()
+
+    # Load the aliases from the json
+    alias = get_aliases(quik_json)
 
     # Aliases are loaded
     # Switch on operation mode
