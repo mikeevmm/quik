@@ -1,5 +1,6 @@
 .*
 !.gitignore
 !.gitinclude
+__pycache__/
 internals/__pycache__/
 quik.json
