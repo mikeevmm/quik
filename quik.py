@@ -159,6 +159,9 @@ if __name__ == '__main__':
         # Add alias
         alias[new_alias] = directory
 
+        # Register the autocomplete
+        print("!complete")
+
         # Give the user some feedback
         print(ALIAS_ASSIGN(new_alias, directory))
 

@@ -7,19 +7,34 @@ Usage:
 Options:
     --cd        Find the directory to change to.
     --output    Find the regular output.
+    --complete  Produce an autocomplete wordlist.
 """
 
 import re
 import sys
 from docopt import docopt
 
+
+def get_input_text():
+    return ''.join(x for x in sys.stdin)
+
+
 if __name__ == '__main__':
     arguments = docopt(__doc__, version="output_parse 1.0")
 
-    input_txt = ''.join(x for x in sys.stdin)
-    cd_regex = re.compile(r"^\s*\!cd \"?(.+?)\"?\s*$\n?", re.MULTILINE)
+    cmd_regex = re.compile(r"^\s*\!(?:cd|complete) \"?(.+?)\"?\s*$\n?", re.MULTILINE)
     
     if arguments['--cd']:
-        print(cd_regex.search(input_txt).group(1).strip())
+        print(cmd_regex.search(get_input_text()).group(1).strip())
     elif arguments['--output']:
-        print(cd_regex.sub("", input_txt).strip())
+        print(cmd_regex.sub("", get_input_text()).strip())
+    elif arguments['--complete']:
+        # Some ugly hacks so we can import quik.py
+        import sys
+        import os.path
+        sys.path.append(
+            os.path.abspath(os.path.join(
+                os.path.dirname(__file__), os.path.pardir)))
+        import quik
+        aliases = quik.get_aliases(quik.get_quik_json())
+        print(' '.join(aliases.keys()))
