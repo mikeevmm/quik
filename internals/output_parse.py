@@ -93,8 +93,6 @@ if __name__ == '__main__':
         grammar_graph.connect("quik", "--help")
         grammar_graph.connect("quik", "-h")
         grammar_graph.connect("add", "--force")
-        grammar_graph.connect("--force", "aliases")
-        grammar_graph.connect("add", "aliases")
         grammar_graph.connect("edit", "--force")
         grammar_graph.connect("remove", "aliases")
 
