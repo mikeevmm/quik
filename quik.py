@@ -127,7 +127,7 @@ def get_aliases(quik_json):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="quik 2.1")
+    arguments = docopt(__doc__, version="quik 2.2")
 
     quik_json = get_quik_json()
 
