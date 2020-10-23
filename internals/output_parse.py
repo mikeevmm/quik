@@ -58,6 +58,8 @@ class Graph:
 
 
 def suggest(suggestions):
+    if len(suggestions) == 0:
+        exit(1)
     print('\n'.join(suggestions), end='')
     exit(0)
 
@@ -109,7 +111,4 @@ if __name__ == '__main__':
             candidates = [candidate \
                     for candidate in grammar_graph.get_connections(words[-2]) \
                     if candidate != words[-1] and candidate.startswith(words[-1])]
-            if len(candidates) > 0:
-                suggest(candidates)
-            else:
-                exit(1)
+            suggest(candidates)
