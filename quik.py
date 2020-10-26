@@ -49,7 +49,11 @@ ALIAS_ALREADY_DEFINED = lambda alias, old_dir, new_dir: f"""Alias {alias} is alr
 \"{old_dir}\"
 Instead use
 quik edit {alias} \"{new_dir}\" """
-ALIAS_ASSIGN = lambda alias, path: f"\"{alias}\" → \"{path}\""
+def ALIAS_ASSIGN(alias, path):
+    try:
+        return f"\"{alias}\" → \"{path}\""
+    except UnicodeEncodeError:
+        return f"\"{alias}\" -> \"{path}\""
 EDIT_NO_EXIST = lambda alias: f"""{alias} is not a defined alias.
 Call `quik --list` for a list of defined aliases, or `quik add` to define a new alias."""
 REMOVE_NO_EXIST = lambda alias: EDIT_NO_EXIST(alias) 
