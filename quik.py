@@ -66,6 +66,11 @@ CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
 
 
+def get_quik_json_loc():
+    return os.environ.get("QUIK_JSON",
+                                   os.path.join(os.path.basename(__file__), "quik.json"))
+
+
 def get_quik_json():
     """Get a dictionary-parsed version of the JSON file specifying the aliases.
     
@@ -73,9 +78,7 @@ def get_quik_json():
         quik JSON as dictionary
     """
     # Check that quik.json exists, and load it into a json object
-    quik_json_loc = os.environ.get("QUIK_JSON",
-                                   os.path.join(os.path.basename(__file__), "quik.json"))
-
+    quik_json_loc = get_quik_json_loc()
     if not os.path.exists(quik_json_loc):
         print(NO_JSON_ENV_VAR)
         exit(1)
@@ -129,6 +132,7 @@ def get_aliases(quik_json):
 if __name__ == '__main__':
     arguments = docopt(__doc__, version="quik 2.2")
 
+    quik_json_loc = get_quik_json_loc()
     quik_json = get_quik_json()
 
     # Load the aliases from the json
