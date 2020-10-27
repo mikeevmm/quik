@@ -157,6 +157,10 @@ if __name__ == '__main__':
 
         # Check whether alias is already defined
         if new_alias in alias and not force:
+            # Edge case; if adding with quik add <alias>, then
+            # user_directory = None; in this case, use a period instead
+            if user_directory is None:
+                user_directory = "."
             print(ALIAS_ALREADY_DEFINED(new_alias, alias[new_alias], user_dir))
             exit(1)
 
