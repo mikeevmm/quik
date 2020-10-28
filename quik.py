@@ -20,6 +20,7 @@ Options:
 import os
 import os.path
 import json
+import sys
 from internals.docopt import docopt
 
 EXPECTED_JSON_VERSION = 1.0
@@ -71,6 +72,9 @@ CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
 
 
+def err_print(msg):
+    print(msg, file=sys.stderr)
+
 def get_quik_json_loc():
     return os.environ.get("QUIK_JSON",
                                    os.path.join(os.path.basename(__file__), "quik.json"))
@@ -85,7 +89,7 @@ def get_quik_json():
     # Check that quik.json exists, and load it into a json object
     quik_json_loc = get_quik_json_loc()
     if not os.path.exists(quik_json_loc):
-        print(NO_JSON_ENV_VAR)
+        err_print(NO_JSON_ENV_VAR)
         exit(1)
 
     with open(quik_json_loc) as quik_json_io:
@@ -105,34 +109,34 @@ def get_aliases(quik_json, warn=True):
     """
     # Check the version
     if "version" not in quik_json:
-        print(NO_JSON_VER)
+        err_print(NO_JSON_VER)
     elif quik_json["version"] != EXPECTED_JSON_VERSION:
-        print(WRONG_JSON_VER(quik_json["version"], EXPECTED_JSON_VERSION))
+        err_print(WRONG_JSON_VER(quik_json["version"], EXPECTED_JSON_VERSION))
 
     # Perform the parsing
     alias = {}
     if "alias" not in quik_json:
         if warn:
-            print(NO_ALIAS_IN_JSON)
+            err_print(NO_ALIAS_IN_JSON)
         exit(1)
     if type(quik_json["alias"]) is not dict:
         if warn:
-            print(BAD_ALIAS_IN_JSON)
+            err_print(BAD_ALIAS_IN_JSON)
         exit(1)
     for json_alias in quik_json["alias"]:
         if json_alias in alias:
             if warn:
-                print(DUPLICATE_ALIAS_IN_JSON(json_alias[0]))
+                err_print(DUPLICATE_ALIAS_IN_JSON(json_alias[0]))
             continue
         if type(quik_json["alias"][json_alias]) is not str:
             if warn:
-                print(MISFORMATTED_ALIAS_IN_JSON(json_alias))
+                err_print(MISFORMATTED_ALIAS_IN_JSON(json_alias))
             continue
 
         alias_path = quik_json["alias"][json_alias]
         if not os.path.exists(alias_path):
             if warn:
-                print(BAD_PATH_IN_JSON(json_alias, alias_path))
+                err_print(BAD_PATH_IN_JSON(json_alias, alias_path))
         alias[json_alias] = alias_path
 
     # Done
@@ -162,7 +166,7 @@ if __name__ == '__main__':
 
         # Don't allow non existing directories
         if not os.path.exists(directory) and not force:
-            print(NEW_DIR_NO_EXIST(user_dir, directory))
+            err_print(NEW_DIR_NO_EXIST(user_dir, directory))
             exit(1)
 
         # Check whether alias is already defined
@@ -171,7 +175,7 @@ if __name__ == '__main__':
             # user_directory = None; in this case, use a period instead
             if user_directory is None:
                 user_directory = "."
-            print(ALIAS_ALREADY_DEFINED(new_alias, alias[new_alias], user_dir))
+            err_print(ALIAS_ALREADY_DEFINED(new_alias, alias[new_alias], user_dir))
             exit(1)
 
         # Add alias
@@ -204,16 +208,16 @@ if __name__ == '__main__':
         edit_alias = arguments['<alias>']
         if edit_alias not in alias:
             if arguments['edit']:
-                print(EDIT_NO_EXIST(edit_alias))
+                err_print(EDIT_NO_EXIST(edit_alias))
             elif arguments['remove']:
-                print(REMOVE_NO_EXIST(edit_alias))
+                err_print(REMOVE_NO_EXIST(edit_alias))
             exit(1)
 
         if arguments['edit']:
             new_dir = arguments['<new_path>']
             new_dir_full = os.path.abspath(new_dir)
             if not os.path.exists(new_dir_full) and not arguments['--force']:
-                print(EDIT_BAD_PATH(edit_alias, new_dir, new_dir_full))
+                err_print(EDIT_BAD_PATH(edit_alias, new_dir, new_dir_full))
                 exit(1)
 
             # Set the alias to point to new directory and save
@@ -240,7 +244,7 @@ if __name__ == '__main__':
         cd_alias = arguments['<alias>']
 
         if cd_alias not in alias:
-            print(CD_NO_ALIAS(cd_alias))
+            err_print(CD_NO_ALIAS(cd_alias))
             exit(1)
         
         # The bash extension will handle it from here.
