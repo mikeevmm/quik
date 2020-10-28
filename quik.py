@@ -6,6 +6,7 @@ Usage:
     quik add [--force] <alias> <path> 
     quik add <alias>
     quik --list
+    quik get <alias>
     quik edit [--force] <alias> <new_path>
     quik remove <alias>
     quik --help | -h
@@ -190,6 +191,14 @@ if __name__ == '__main__':
         # List all existing aliases
         for alias_name, alias_dir in alias.items():
             print(ALIAS_ASSIGN(alias_name, alias_dir))
+    elif arguments['get']:
+        # Print an alias's path
+        get = arguments['<alias>']
+        if get not in alias:
+            print('', end='')
+            exit(1)
+        print(alias[get], end='')
+        exit(0)
     elif arguments['edit'] or arguments['remove']:
         # Edit an existing alias
         edit_alias = arguments['<alias>']
