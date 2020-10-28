@@ -88,7 +88,7 @@ if __name__ == '__main__':
                 os.path.dirname(
                     os.path.dirname(os.path.abspath(__file__))))
             from quik import get_aliases, get_quik_json
-            return list(get_aliases(get_quik_json()).keys())
+            return list(get_aliases(get_quik_json(), warn=False).keys())
 
         grammar_graph = Graph("root")
         grammar_graph.memoize_tree("aliases", [alias for alias in aliases()])
@@ -102,6 +102,8 @@ if __name__ == '__main__':
         grammar_graph.connect("quik", "-h")
         grammar_graph.connect("add", "--force")
         grammar_graph.connect("edit", "--force")
+        grammar_graph.connect("--force", "aliases")
+        grammar_graph.connect("edit", "aliases")
         grammar_graph.connect("remove", "aliases")
 
         if len(words) == 0 or words[0] != "quik":

@@ -93,7 +93,7 @@ def get_quik_json():
     return quik_json
 
 
-def get_aliases(quik_json):
+def get_aliases(quik_json, warn=True):
     """Load the aliases in the JSON file.
     
     Arguments:
@@ -111,22 +111,27 @@ def get_aliases(quik_json):
     # Perform the parsing
     alias = {}
     if "alias" not in quik_json:
-        print(NO_ALIAS_IN_JSON)
+        if warn:
+            print(NO_ALIAS_IN_JSON)
         exit(1)
     if type(quik_json["alias"]) is not dict:
-        print(BAD_ALIAS_IN_JSON)
+        if warn:
+            print(BAD_ALIAS_IN_JSON)
         exit(1)
     for json_alias in quik_json["alias"]:
         if json_alias in alias:
-            print(DUPLICATE_ALIAS_IN_JSON(json_alias[0]))
+            if warn:
+                print(DUPLICATE_ALIAS_IN_JSON(json_alias[0]))
             continue
         if type(quik_json["alias"][json_alias]) is not str:
-            print(MISFORMATTED_ALIAS_IN_JSON(json_alias))
+            if warn:
+                print(MISFORMATTED_ALIAS_IN_JSON(json_alias))
             continue
 
         alias_path = quik_json["alias"][json_alias]
         if not os.path.exists(alias_path):
-            print(BAD_PATH_IN_JSON(json_alias, alias_path))
+            if warn:
+                print(BAD_PATH_IN_JSON(json_alias, alias_path))
         alias[json_alias] = alias_path
 
     # Done
