@@ -56,6 +56,9 @@ class Graph:
     def get_connections(self, name):
         return [y for x in self.connection_graph.get(name, []) for y in self.to_explicit(x)]
 
+    def contains(self, name):
+        return name in self.connection_graph or any(name in tree for tree in self.memoized_trees) 
+
 
 def suggest(suggestions):
     if len(suggestions) == 0:
@@ -111,6 +114,17 @@ if __name__ == '__main__':
         if len(words) == 0 or words[0] != "quik":
             # That's weird... how are you invoking this?
             exit(1)
+
+        # "Edge" case; doing something like
+        #  quik add<tab>
+        # results in
+        #  quik --force
+        # because the autocomplete looks at add and returns --force,
+        # but bash reads this as "replace add by --force"
+        # so if the word matches something in the graph already, 
+        # just return that.
+        if not arguments['--complete'].endswith(' ') and grammar_graph.contains(words[-1]):
+            suggest([words[-1]])
 
         candidates = grammar_graph.get_connections(words[-1])
         if len(candidates) > 0:
