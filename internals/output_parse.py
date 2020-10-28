@@ -74,6 +74,12 @@ if __name__ == '__main__':
     elif arguments['--output']:
         print(cmd_regex.sub("", get_input_text()).strip())
     elif arguments['--complete'] is not None:
+        try:
+            words = shlex.split(arguments['--complete'])
+        except ValueError:
+            # Could not parse
+            exit(1)
+
         # HACK: Include quik.py, which is in parent directory
         def aliases():
             import os
@@ -97,8 +103,6 @@ if __name__ == '__main__':
         grammar_graph.connect("add", "--force")
         grammar_graph.connect("edit", "--force")
         grammar_graph.connect("remove", "aliases")
-
-        words = shlex.split(arguments['--complete'])
 
         if len(words) == 0 or words[0] != "quik":
             # That's weird... how are you invoking this?
