@@ -2,6 +2,8 @@
 
 Go somewhere, quik.
 
+![Example use](example/example.gif)
+
 quik lets you define bookmarked directories to quickly go to.
 For example:
 

@@ -1,0 +1,225 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 80 
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 10
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: 
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 490
+    content: "\e[1;36m/\e[0m \r\n\e[1;31m❯\e[0m "
+  - delay: 2758
+    content: q
+  - delay: 95
+    content: u
+  - delay: 47
+    content: i
+  - delay: 167
+    content: k
+  - delay: 93
+    content: ' '
+  - delay: 664
+    content: '-'
+  - delay: 110
+    content: '-'
+  - delay: 171
+    content: l
+  - delay: 182
+    content: i
+  - delay: 52
+    content: s
+  - delay: 71
+    content: t
+  - delay: 108
+    content: "\r\n"
+  - delay: 60
+    content: '"alias" → "/my/nested/but/frequent/directory"'
+  - delay: 5
+    content: "\r\n\e[1;36m/\e[0m \r\n\e[1;31m❯\e[0m "
+  - delay: 1771
+    content: e
+  - delay: 71
+    content: c
+  - delay: 86
+    content: h
+  - delay: 100
+    content: o
+  - delay: 117
+    content: ' '
+  - delay: 334
+    content: $
+  - delay: 85
+    content: (
+  - delay: 333
+    content: p
+  - delay: 96
+    content: w
+  - delay: 173
+    content: d
+  - delay: 242
+    content: )
+  - delay: 501
+    content: "\r\n"
+  - delay: 8
+    content: "/\r\n"
+  - delay: 24
+    content: "\r\n\e[1;36m/\e[0m \r\n\e[1;32m❯\e[0m "
+  - delay: 2054
+    content: q
+  - delay: 88
+    content: u
+  - delay: 69
+    content: i
+  - delay: 139
+    content: k
+  - delay: 80
+    content: ' '
+  - delay: 153
+    content: a
+  - delay: 100
+    content: l
+  - delay: 144
+    content: i
+  - delay: 79
+    content: a
+  - delay: 64
+    content: s
+  - delay: 305
+    content: "\r\n"
+  - delay: 104
+    content: "\r\n\e[1;36mbut/frequent/directory\e[0m \r\n\e[1;31m❯\e[0m "
+  - delay: 2179
+    content: e
+  - delay: 73
+    content: c
+  - delay: 78
+    content: h
+  - delay: 161
+    content: o
+  - delay: 73
+    content: ' '
+  - delay: 595
+    content: $
+  - delay: 112
+    content: (
+  - delay: 280
+    content: p
+  - delay: 27
+    content: w
+  - delay: 208
+    content: d
+  - delay: 346
+    content: )
+  - delay: 244
+    content: "\r\n"
+  - delay: 7
+    content: "/my/nested/but/frequent/directory\r\n"
+  - delay: 21
+    content: "\r\n\e[1;36mbut/frequent/directory\e[0m \r\n\e[1;32m❯\e[0m "
+  - delay: 2327
+    content: "logout"
