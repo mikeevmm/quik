@@ -8,7 +8,7 @@ quik lets you define bookmarked directories to quickly go to.
 For example:
 
 ``` shell
-$ quik add "$HOME/Documents" docs
+$ quik add docs "$HOME/Documents"
 "docs" → "/home/miguelmurca/Documents"
 $ quik docs
 $ echo $(pwd)
