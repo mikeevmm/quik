@@ -22,6 +22,10 @@ bash install.sh
 quik --help
 ```
 
+## Why Quik
+
+quik is mostly Python. This makes its source code easier to read (as compared to something written in bash), and easier to port to other terminals (like Zsh of Fish), as only the [bash contents](internals/quik_setup.sh) need to be ported.
+
 ## License
 
 This tool is licensed under an MIT license.
