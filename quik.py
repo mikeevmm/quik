@@ -195,6 +195,7 @@ if __name__ == '__main__':
         # List all existing aliases
         for alias_name, alias_dir in alias.items():
             print(ALIAS_ASSIGN(alias_name, alias_dir))
+        exit(0)
     elif arguments['get']:
         # Print an alias's path
         get = arguments['<alias>']
