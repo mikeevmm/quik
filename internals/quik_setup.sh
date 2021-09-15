@@ -24,7 +24,7 @@ function _quik_autocomplete {
 
 function quik {
 	OUTPUT="$(${PY_QUIK} "$@")"
-	RET=$!
+	RET=$?
 	if [[ "${OUTPUT}" == *"!cd "* ]]
 	then
 		echo -e -n "$(echo -n "${OUTPUT}" | ${PY_PARSE} --output)"
