@@ -9,7 +9,7 @@ config:
   
   # Specify the current working directory path
   # the default is the current working directory path
-  cwd: /
+  cwd: /home/user
   
   # Export additional ENV variables
   env:
@@ -18,7 +18,7 @@ config:
   # Explicitly set the number of columns
   # or use `auto` to take the current
   # number of columns of your shell
-  cols: 80 
+  cols: 80
   
   # Explicitly set the number of rows
   # or use `auto` to take the current
@@ -111,115 +111,267 @@ config:
   
 # Records, feel free to edit them
 records:
-  - delay: 490
-    content: "\e[1;36m/\e[0m \r\n\e[1;31m❯\e[0m "
-  - delay: 2758
-    content: q
-  - delay: 95
-    content: u
-  - delay: 47
-    content: i
-  - delay: 167
+  - delay: 523
+    content: "\e[?2004h\e]0;user@demo: ~\a\e[01;32muser@demo\e[00m:\e[01;34m~\e[00m$ "
+  - delay: 1064
+    content: m
+  - delay: 17
     content: k
-  - delay: 93
-    content: ' '
-  - delay: 664
-    content: '-'
-  - delay: 110
-    content: '-'
-  - delay: 171
-    content: l
-  - delay: 182
+  - delay: 204
+    content: d
+  - delay: 66
     content: i
-  - delay: 52
-    content: s
-  - delay: 71
-    content: t
-  - delay: 108
-    content: "\r\n"
-  - delay: 60
-    content: '"alias" → "/my/nested/but/frequent/directory"'
-  - delay: 5
-    content: "\r\n\e[1;36m/\e[0m \r\n\e[1;31m❯\e[0m "
-  - delay: 1771
-    content: e
-  - delay: 71
-    content: c
-  - delay: 86
-    content: h
-  - delay: 100
-    content: o
+  - delay: 111
+    content: r
+  - delay: 103
+    content: ' '
+  - delay: 256
+    content: '-'
+  - delay: 525
+    content: p
   - delay: 117
     content: ' '
-  - delay: 334
-    content: $
-  - delay: 85
-    content: (
-  - delay: 333
-    content: p
+  - delay: 331
+    content: m
+  - delay: 224
+    content: 'y'
+  - delay: 225
+    content: /
+  - delay: 296
+    content: v
+  - delay: 206
+    content: e
+  - delay: 62
+    content: r
   - delay: 96
-    content: w
-  - delay: 173
-    content: d
-  - delay: 242
-    content: )
-  - delay: 501
-    content: "\r\n"
-  - delay: 8
-    content: "/\r\n"
-  - delay: 24
-    content: "\r\n\e[1;36m/\e[0m \r\n\e[1;32m❯\e[0m "
-  - delay: 2054
-    content: q
-  - delay: 88
-    content: u
-  - delay: 69
-    content: i
-  - delay: 139
-    content: k
-  - delay: 80
-    content: ' '
-  - delay: 153
-    content: a
-  - delay: 100
-    content: l
-  - delay: 144
-    content: i
-  - delay: 79
-    content: a
-  - delay: 64
-    content: s
+    content: 'y'
+  - delay: 299
+    content: /
   - delay: 305
-    content: "\r\n"
-  - delay: 104
-    content: "\r\n\e[1;36mbut/frequent/directory\e[0m \r\n\e[1;31m❯\e[0m "
-  - delay: 2179
+    content: 'n'
+  - delay: 70
+    content: e
+  - delay: 114
+    content: s
+  - delay: 100
+    content: t
+  - delay: 269
+    content: e
+  - delay: 197
+    content: d
+  - delay: 241
+    content: /
+  - delay: 208
+    content: b
+  - delay: 166
+    content: u
+  - delay: 78
+    content: t
+  - delay: 220
+    content: /
+  - delay: 188
+    content: l
+  - delay: 145
+    content: o
+  - delay: 80
+    content: g
+  - delay: 106
+    content: i
+  - delay: 97
+    content: c
+  - delay: 74
+    content: a
+  - delay: 317
+    content: l
+  - delay: 291
+    content: /
+  - delay: 568
+    content: f
+  - delay: 93
+    content: o
+  - delay: 141
+    content: l
+  - delay: 90
+    content: d
+  - delay: 151
     content: e
   - delay: 73
+    content: r
+  - delay: 424
+    content: "\r\n\e[?2004l\r"
+  - delay: 1607
+    content: "\e[?2004h\e]0;user@demo: ~\a\e[01;32muser@demo\e[00m:\e[01;34m~\e[00m$ "
+  - delay: 596
     content: c
-  - delay: 78
-    content: h
-  - delay: 161
-    content: o
-  - delay: 73
-    content: ' '
-  - delay: 595
-    content: $
-  - delay: 112
-    content: (
-  - delay: 280
-    content: p
-  - delay: 27
-    content: w
-  - delay: 208
+  - delay: 74
     content: d
-  - delay: 346
-    content: )
-  - delay: 244
-    content: "\r\n"
-  - delay: 7
-    content: "/my/nested/but/frequent/directory\r\n"
-  - delay: 21
-    content: "\r\n\e[1;36mbut/frequent/directory\e[0m \r\n\e[1;32m❯\e[0m "
-  - delay: 2327
-    content: "logout"
+  - delay: 149
+    content: ' '
+  - delay: 252
+    content: m
+  - delay: 285
+    content: 'y'
+  - delay: 99
+    content: /
+  - delay: 297
+    content: very/
+  - delay: 237
+    content: nested/
+  - delay: 286
+    content: but/
+  - delay: 298
+    content: logical/
+  - delay: 339
+    content: folder/
+  - delay: 409
+    content: "\r\n\e[?2004l\r\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 750
+    content: q
+  - delay: 191
+    content: u
+  - delay: 51
+    content: i
+  - delay: 270
+    content: k
+  - delay: 104
+    content: ' '
+  - delay: 181
+    content: '-'
+  - delay: 137
+    content: '-'
+  - delay: 174
+    content: l
+  - delay: 84
+    content: i
+  - delay: 72
+    content: s
+  - delay: 49
+    content: t
+  - delay: 115
+    content: "\r\n\e[?2004l\r"
+  - delay: 38
+    content: "\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 1171
+    content: q
+  - delay: 46
+    content: u
+  - delay: 46
+    content: i
+  - delay: 153
+    content: k
+  - delay: 115
+    content: ' '
+  - delay: 515
+    content: "\b\e[K"
+  - delay: 229
+    content: "\r\n\e[?2004l\r"
+  - delay: 50
+    content: "Usage:\r\n    quik <alias>\r\n    quik add [--force] <alias> <path> \r\n    quik add <alias>\r\n    quik --list\r\n    quik get <alias>\r\n    quik edit [--force] <alias> <new_path>\r\n    quik remove <alias>\r\n    quik --help | -h\r\n\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 1032
+    content: q
+  - delay: 75
+    content: u
+  - delay: 60
+    content: i
+  - delay: 233
+    content: k
+  - delay: 142
+    content: ' '
+  - delay: 142
+    content: a
+  - delay: 203
+    content: d
+  - delay: 153
+    content: d
+  - delay: 149
+    content: ' '
+  - delay: 1498
+    content: f
+  - delay: 65
+    content: o
+  - delay: 131
+    content: l
+  - delay: 65
+    content: d
+  - delay: 150
+    content: e
+  - delay: 65
+    content: r
+  - delay: 125
+    content: ' '
+  - delay: 548
+    content: .
+  - delay: 256
+    content: "\r\n\e[?2004l\r"
+  - delay: 28
+    content: "\"folder\" → \"/home/user/my/very/nested/but/logical/folder\"\r\n\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 5265
+    content: c
+  - delay: 55
+    content: d
+  - delay: 151
+    content: ' '
+  - delay: 476
+    content: "\r\n\e[?2004l\r\e[?2004h\e]0;user@demo: ~\a\e[01;32muser@demo\e[00m:\e[01;34m~\e[00m$ "
+  - delay: 816
+    content: q
+  - delay: 54
+    content: u
+  - delay: 80
+    content: i
+  - delay: 164
+    content: k
+  - delay: 123
+    content: ' '
+  - delay: 220
+    content: '-'
+  - delay: 131
+    content: '-'
+  - delay: 165
+    content: l
+  - delay: 69
+    content: i
+  - delay: 65
+    content: s
+  - delay: 34
+    content: t
+  - delay: 230
+    content: "\r\n\e[?2004l\r"
+  - delay: 46
+    content: "\"folder\" → \"/home/user/my/very/nested/but/logical/folder\"\r\n\e[?2004h\e]0;user@demo: ~\a\e[01;32muser@demo\e[00m:\e[01;34m~\e[00m$ "
+  - delay: 10369
+    content: q
+  - delay: 63
+    content: u
+  - delay: 49
+    content: i
+  - delay: 211
+    content: k
+  - delay: 100
+    content: ' '
+  - delay: 206
+    content: f
+  - delay: 54
+    content: o
+  - delay: 142
+    content: l
+  - delay: 89
+    content: d
+  - delay: 135
+    content: e
+  - delay: 63
+    content: r
+  - delay: 95
+    content: "\r\n\e[?2004l\r"
+  - delay: 82
+    content: "\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 1176
+    content: p
+  - delay: 80
+    content: w
+  - delay: 198
+    content: d
+  - delay: 128
+    content: "\r\n\e[?2004l\r/home/user/my/very/nested/but/logical/folder\r\n\e[?2004h\e]0;user@demo: ~/my/very/nested/but/logical/folder\a\e[01;32muser@demo\e[00m:\e[01;34m~/my/very/nested/but/logical/folder\e[00m$ "
+  - delay: 2399
+    content: "\e[?2004l\r\r\nlogout\r\n"
