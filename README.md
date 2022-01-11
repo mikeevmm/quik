@@ -9,10 +9,10 @@ For example:
 
 ``` shell
 $ quik add docs "$HOME/Documents"
-"docs" → "/home/miguelmurca/Documents"
+"docs" → "/home/user/Documents"
 $ quik docs
-$ echo $(pwd)
-/home/miguelmurca/Documents
+$ pwd
+/home/user/Documents
 ```
 
 ## Quick Start
