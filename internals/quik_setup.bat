@@ -4,6 +4,7 @@ if defined quik_setup ( goto :run )
 
 set quik_setup=1
 doskey quik=%~f0 $*
+goto :eof
 
 :run
 
