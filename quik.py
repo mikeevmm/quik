@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Quikly go to where you want to be.
 
 Usage:
@@ -22,6 +23,15 @@ import os.path
 import json
 import sys
 from internals.docopt import docopt
+
+class NoPrint:
+    def __enter__(self):
+        self._original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout.close()
+        sys.stdout = self._original_stdout
 
 EXPECTED_JSON_VERSION = 1.0
 NO_JSON_ENV_VAR = """Could not find quik.json.
@@ -51,10 +61,13 @@ ALIAS_ALREADY_DEFINED = lambda alias, old_dir, new_dir: f"""Alias {alias} is alr
 \"{old_dir}\"
 Instead use
 quik edit {alias} \"{new_dir}\" """
-def ALIAS_ASSIGN(alias, path):
-    try:
+try:
+    with NoPrint():
+        print('→')
+    def ALIAS_ASSIGN(alias, path):
         return f"\"{alias}\" → \"{path}\""
-    except UnicodeEncodeError:
+except UnicodeEncodeError:
+    def ALIAS_ASSIGN(alias, path):
         return f"\"{alias}\" -> \"{path}\""
 EDIT_NO_EXIST = lambda alias: f"""{alias} is not a defined alias.
 Call `quik --list` for a list of defined aliases, or `quik add` to define a new alias."""
@@ -77,7 +90,7 @@ def err_print(msg):
 
 def get_quik_json_loc():
     return os.environ.get("QUIK_JSON",
-                                   os.path.join(os.path.basename(__file__), "quik.json"))
+               os.path.join(os.path.basename(__file__), "quik.json"))
 
 
 def get_quik_json():
@@ -144,7 +157,7 @@ def get_aliases(quik_json, warn=True):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="quik 2.2")
+    arguments = docopt(__doc__, version="quik 2.3")
 
     quik_json_loc = get_quik_json_loc()
     quik_json = get_quik_json()
@@ -172,10 +185,13 @@ if __name__ == '__main__':
         # Check whether alias is already defined
         if new_alias in alias and not force:
             # Edge case; if adding with quik add <alias>, then
-            # user_directory = None; in this case, use a period instead
-            if user_directory is None:
-                user_directory = "."
-            err_print(ALIAS_ALREADY_DEFINED(new_alias, alias[new_alias], user_dir))
+            # arguments['<path>'] = None; in this case, use a period instead
+            if arguments['<path>'] is None:
+                user_dir = "."
+            else:
+                user_dir = arguments['<path>']
+            err_print(
+                ALIAS_ALREADY_DEFINED(new_alias, alias[new_alias], user_dir))
             exit(1)
 
         # Add alias
@@ -200,9 +216,9 @@ if __name__ == '__main__':
         # Print an alias's path
         get = arguments['<alias>']
         if get not in alias:
-            print('', end='')
+            print('')
             exit(1)
-        print(alias[get], end='')
+        print(alias[get])
         exit(0)
     elif arguments['edit'] or arguments['remove']:
         # Edit an existing alias
@@ -249,5 +265,5 @@ if __name__ == '__main__':
             exit(1)
         
         # The bash extension will handle it from here.
-        print(f"!cd \"{alias[cd_alias]}\"")
+        print(f"+cd \"{alias[cd_alias]}\"")
         exit(0)

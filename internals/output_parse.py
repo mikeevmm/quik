@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A bash helper file. You shouldn't be looking at this.
+"""A helper file to parse output. You shouldn't be looking at this.
 
 Usage:
     output_parse [options]
@@ -68,9 +68,9 @@ def suggest(suggestions):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="output_parse 1.0")
+    arguments = docopt(__doc__, version="output_parse 2.0")
 
-    cmd_regex = re.compile(r"^\s*\!(?:cd) \"?(.+?)\"?\s*$\n?", re.MULTILINE)
+    cmd_regex = re.compile(r"^\s*\+(?:cd) \"?(.+?)\"?\s*$\n?", re.MULTILINE)
 
     if arguments['--cd']:
         print(cmd_regex.search(get_input_text()).group(1).strip())
