@@ -20,13 +20,15 @@ $ pwd
 ``` shell
 git clone https://github.com/mikeevmm/quik
 cd quik
-bash install.sh
+python install.py
 quik --help
 ```
 
 ## Why Quik
 
 quik is mostly Python. This makes its source code easier to read (as compared to something written in bash), and easier to port to other terminals (like Zsh of Fish), as only the [bash contents](internals/quik_setup.sh) need to be ported.
+
+As a testament to this, as of version 2.3, `quik` is also compatible with Windows, via the [batch port of that file](internals/quik_setup.bat). :)
 
 ## License
 
