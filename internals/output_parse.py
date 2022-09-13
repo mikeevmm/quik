@@ -48,9 +48,9 @@ class Graph:
 
     def connect(self, this, that):
         if that in self.memoized_trees:
-            self.connection_graph[this].append(Graph.MemoizedTree(that))
+            self.connection_graph.setdefault(this, []).append(Graph.MemoizedTree(that))
         else:
-            self.connection_graph[this].append(Graph.Node(that))
+            self.connection_graph.setdefault(this, []).append(Graph.Node(that))
         self.connection_graph.setdefault(that, [])
 
     def get_connections(self, name):
@@ -95,15 +95,13 @@ if __name__ == '__main__':
 
         grammar_graph = Graph("root")
         grammar_graph.memoize_tree("aliases", [alias for alias in aliases()])
-        grammar_graph.connect("root", "quik")
+        grammar_graph.memoize_tree("cmds",
+                ["add", "--list", "get", "edit", "remove", 
+                    "--help", "-h"])
+        grammar_graph.connect("root", "aliases")
         grammar_graph.connect("quik", "aliases")
-        grammar_graph.connect("quik", "add")
-        grammar_graph.connect("quik", "--list")
-        grammar_graph.connect("quik", "get")
-        grammar_graph.connect("quik", "edit")
-        grammar_graph.connect("quik", "remove")
-        grammar_graph.connect("quik", "--help")
-        grammar_graph.connect("quik", "-h")
+        grammar_graph.connect("root", "cmds")
+        grammar_graph.connect("quik", "cmds")
         grammar_graph.connect("add", "--force")
         grammar_graph.connect("get", "aliases")
         grammar_graph.connect("edit", "--force")
@@ -111,9 +109,9 @@ if __name__ == '__main__':
         grammar_graph.connect("edit", "aliases")
         grammar_graph.connect("remove", "aliases")
 
-        if len(words) == 0 or words[0] != "quik":
+        #if len(words) == 0 or words[0] != "quik":
             # That's weird... how are you invoking this?
-            exit(1)
+            #exit(1)
 
         # "Edge" case; doing something like
         #  quik add<tab>
@@ -123,10 +121,15 @@ if __name__ == '__main__':
         # but bash reads this as "replace add by --force"
         # so if the word matches something in the graph already, 
         # just return that.
-        if not arguments['--complete'].endswith(' ') and grammar_graph.contains(words[-1]):
+        if (len(words) > 0 and 
+                not arguments['--complete'].endswith(' ') and 
+                grammar_graph.contains(words[-1])):
             suggest([words[-1]])
 
-        candidates = grammar_graph.get_connections(words[-1])
+        if len(words) > 0:
+            candidates = grammar_graph.get_connections(words[-1])
+        else:
+            candidates = grammar_graph.get_connections('root')
         if len(candidates) > 0:
             suggest(candidates)
         elif len(words) > 1:
