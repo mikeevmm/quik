@@ -90,7 +90,7 @@ def err_print(msg):
 
 def get_quik_json_loc():
     return os.environ.get("QUIK_JSON",
-               os.path.join(os.path.basename(__file__), "quik.json"))
+               os.path.join(os.path.dirname(__file__), "quik.json"))
 
 
 def get_quik_json():
