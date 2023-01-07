@@ -26,9 +26,14 @@ quik --help
 
 ## Why Quik
 
-quik is mostly Python. This makes its source code easier to read (as compared to something written in bash), and easier to port to other terminals (like Zsh of Fish), as only the [bash contents](internals/quik_setup.sh) need to be ported.
+quik is mostly Python. This makes its source code easier to read (as compared
+to something written in bash), and easier to port to other terminals (like Zsh
+of Fish), as only the [bash contents](internals/quik_setup.sh) need to be
+ported.
 
-As a testament to this, as of version 2.3, `quik` is also compatible with Windows, via the [batch port of that file](internals/quik_setup.bat). :)
+As a testament to this, as of version 2.3, `quik` is also compatible with
+Windows, via the [batch port of that file](internals/quik_setup.bat), and as of
+2.4 also via the [PowerShell port](internals/quik_setup.ps1)! ❤️
 
 ## License
 
@@ -37,4 +42,5 @@ See LICENSE for details.
 
 ## Support
 
-💕 If you liked quik, consider [buying me a coffee](https://www.paypal.me/miguelmurca/2.50).
+💕 If you liked quik, consider [buying me
+a coffee](https://www.paypal.me/miguelmurca/2.50).

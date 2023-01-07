@@ -64,12 +64,14 @@ if __name__ == '__main__':
         
     match platform.system():
         case 'Windows':
+            cmd_setup_path = os.path.join(root_dir, 'internals', 'quik_setup.bat')
+            ps_setup_path = os.path.join(root_dir, 'internals', 'quik_setup.ps1')
             print('Please configure your system to run')
-            setup_path = os.path.join(root_dir, 'internals', 'quik_setup.bat')
-            print(f'\t{setup_path}')
-            print('\t\ton shell startup. '
-                'Then, run this file or restart the system '
-                'for it to take effect.')
+            print(f'\t{cmd_setup_path}')
+            print('\t\ton shell startup, if you\'re using Command Prompt, '
+                'or add the following line to your PowerShell profile')
+            print(f'\t. {ps_setup_path}')
+            print('\t\tto dot source the file.')
         case other:
             if other != 'Linux':
                 print('⚠️ Assuming a Linux system.')
