@@ -25,7 +25,7 @@ function _quik_autocomplete {
 function quik {
 	OUTPUT="$(${PY_QUIK} "$@")"
 	RET=$?
-	if [[ "${OUTPUT}" == *"!cd "* ]]
+	if [[ "${OUTPUT}" == *"+cd "* ]]
 	then
 		echo -e -n "$(echo -n "${OUTPUT}" | ${PY_PARSE} --output)"
 		DIR="$(echo -e -n "${OUTPUT}" | ${PY_PARSE} --cd)"
