@@ -35,6 +35,12 @@ As a testament to this, as of version 2.3, `quik` is also compatible with
 Windows, via the [batch port of that file](internals/quik_setup.bat), and as of
 2.4 also via the [PowerShell port](internals/quik_setup.ps1)! ❤️
 
+### Supported Shells
+
+- [x] Bash
+- [x] Command Prompt
+- [x] PowerShell
+
 ## License
 
 This tool is licensed under an MIT license.
