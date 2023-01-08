@@ -23,6 +23,7 @@ import os.path
 import json
 import sys
 from internals.docopt import docopt
+from internals.version import JSON_VERSION, QUIK_VERSION
 
 class NoPrint:
     def __enter__(self):
@@ -33,7 +34,6 @@ class NoPrint:
         sys.stdout.close()
         sys.stdout = self._original_stdout
 
-EXPECTED_JSON_VERSION = 1.0
 NO_JSON_ENV_VAR = """Could not find quik.json.
 Please make sure your QUIK_JSON environment variable is set up, and that the file exists."""
 NO_JSON_VER = """Warning: quik.json does not have a version.
@@ -123,8 +123,8 @@ def get_aliases(quik_json, warn=True):
     # Check the version
     if "version" not in quik_json:
         err_print(NO_JSON_VER)
-    elif quik_json["version"] != EXPECTED_JSON_VERSION:
-        err_print(WRONG_JSON_VER(quik_json["version"], EXPECTED_JSON_VERSION))
+    elif quik_json["version"] != JSON_VERSION:
+        err_print(WRONG_JSON_VER(quik_json["version"], JSON_VERSION))
 
     # Perform the parsing
     alias = {}
@@ -157,7 +157,7 @@ def get_aliases(quik_json, warn=True):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="quik 2.4")
+    arguments = docopt(__doc__, version=f"quik {QUIK_VERSION}")
 
     quik_json_loc = get_quik_json_loc()
     quik_json = get_quik_json()
