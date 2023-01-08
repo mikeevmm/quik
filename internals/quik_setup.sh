@@ -46,23 +46,20 @@ function quik {
     OUTPUT="$(${PY_QUIK} "$@")"
     RET=$?
 
-    # PY_QUIK indicates a change of working directory should occur by the
-    # presence of the string '+cd' in its output.
-    # If this string is not present at all, we just display the raw output to
-    # the user.
-    if [[ "${OUTPUT}" == *"+cd "* ]]
+    # We can use the PY_PARSE auxiliary script to split the raw output into
+    # what the output that should be shown to the user, and the directory
+    # that we should change into.
+    #
+    # These two modes of operation can be achieved with the `--output` and
+    # `--cd` flags.
+    #
+    # If the `--cd` mode output is empty, that means that there is no directory
+    # to change to.
+    DIR="$(echo -e -n "${OUTPUT}" | ${PY_PARSE} --cd)"
+    echo -e -n "$(echo -n "${OUTPUT}" | ${PY_PARSE} --output)"
+    if  [[ $param = *[!\ ]* ]] # output is anything other than whitespace
     then
-        # Otherwise, we should use the PY_PARSE auxiliary script to split the
-        # raw output into what the output that should be shown to the user, and
-        # the directory that we should change into.
-        #
-        # These two modes of operation can be achieved with the `--output` and
-        # `--cd` flags.
-        echo -e -n "$(echo -n "${OUTPUT}" | ${PY_PARSE} --output)"
-        DIR="$(echo -e -n "${OUTPUT}" | ${PY_PARSE} --cd)"
         cd "${DIR}"
-    else
-        echo -n "${OUTPUT}"
     fi
 
     return ${RET}

@@ -17,12 +17,13 @@ $env:QUIK_JSON = Convert-Path -Path (Join-Path -Path $scriptPath.parent -ChildPa
 function Invoke-Quik {
     $out = (&python $pyQuik @args) -join "`n"
     $exitcode=$LASTEXITCODE
-    if ($out | Select-String -Pattern '+cd' -SimpleMatch -Quiet) {
-        Write-Host ($out | &python $pyParse --output)
-        $dir = ($out | &python $pyParse --cd)
+    $userOut = ($out | &python $pyParse --output)
+    if (![String]::IsNullOrWhitespace($userOut)) {
+        Write-Host $userOut
+    }
+    $dir = ($out | &python $pyParse --cd)
+    if (![String]::IsNullOrWhitespace($dir)) {
         Set-Location -LiteralPath $dir
-    } else {
-        Write-Host $out
     }
     $LASTEXITCODE=$exitcode
 }
