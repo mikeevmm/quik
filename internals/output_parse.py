@@ -73,7 +73,12 @@ if __name__ == '__main__':
     cmd_regex = re.compile(r"^\s*\+(?:cd) \"?(.+?)\"?\s*$\n?", re.MULTILINE)
 
     if arguments['--cd']:
-        print(cmd_regex.search(get_input_text()).group(1).strip())
+        match_obj = cmd_regex.search(get_input_text())
+        if match_obj is None:
+            # Exit with no output
+            pass
+        else:
+            print(match_obj.group(1).strip())
     elif arguments['--output']:
         print(cmd_regex.sub("", get_input_text()).strip())
     elif arguments['--complete'] is not None:

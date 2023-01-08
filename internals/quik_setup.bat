@@ -33,21 +33,17 @@ if %retcode% NEQ 0 (
     goto :eof
 )
 
-(echo !out! | findstr /l "+cd ") >nul 2>&1
-if %errorlevel%==0 (
-    for /F "delims=*" %%i in ('echo !out! ^| python %parse_py% --output 2^>^&1') do if "!userout!"=="" (set userout=%%i) else (set userout=!userout!!nl!%%i)
-    if "!userout!" NEQ "" (echo !userout!)
+for /F "delims=*" %%i in ('echo !out! ^| python %parse_py% --output 2^>^&1') do if "!userout!"=="" (set userout=%%i) else (set userout=!userout!!nl!%%i)
+if "!userout!" NEQ "" (echo !userout!)
 
-    for /F "delims=*" %%i in ('echo !out! ^| python %parse_py% --cd 2^>^&1') do set cdout=%%i
+for /F "delims=*" %%i in ('echo !out! ^| python %parse_py% --cd 2^>^&1') do set cdout=%%i
+if [%%i] == [] goto :eof
 
-    REM HACK to survive endlocal
-    for /f "tokens=1 delims=" %%A in (""!cdout!"") do (
-        endlocal
-        cd /D %%A
-        goto :eof
-    )
-) else (
-    if "!out!" NEQ "" (echo !out!)
+REM HACK to survive endlocal
+for /f "tokens=1 delims=" %%A in (""!cdout!"") do (
+    endlocal
+    cd /D %%A
+    goto :eof
 )
 
 endlocal
