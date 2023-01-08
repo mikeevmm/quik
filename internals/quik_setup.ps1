@@ -35,6 +35,6 @@ Register-ArgumentCompleter -Native -CommandName quik -ScriptBlock {
     if ($LASTEXITCODE -eq 0) {
         $completion
     } else {
-        Get-ChildItem ".\$wordToComplete*" | ForEach-Object { Resolve-Path -Relative "$_" }
+        Get-ChildItem ".\$wordToComplete*" -Directory | ForEach-Object { Resolve-Path -Relative "$_" }
     }
 }
