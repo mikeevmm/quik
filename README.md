@@ -41,6 +41,20 @@ Windows, via the [batch port of that file](internals/quik_setup.bat), and as of
 - [x] Command Prompt
 - [x] PowerShell
 
+### I Would Like to Contribute With a Port for my Shell
+
+Such pull requests are very welcome.
+
+If you are interested in doing so, all that you need to do is create a file in
+the style of [`quik_setup.sh`](internals/quik_setup.sh) for your shell, and
+indicate in your pull request how this file should be used in your shell (i.e.,
+whether it should be sourced at the start of each session, ran at the start of
+each session, or something else).
+
+I have made an attempt to thoroughly comment
+[`quik_setup.sh`](internals/quik_setup.sh), so it should be easy to follow and
+write analogous code for your shell.
+
 ## License
 
 This tool is licensed under an MIT license.
