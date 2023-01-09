@@ -17,7 +17,7 @@ $env:QUIK_JSON = Convert-Path -Path (Join-Path -Path $scriptPath.parent -ChildPa
 function Invoke-Quik {
     $out = (&python $pyQuik @args) -join "`n"
     $exitcode=$LASTEXITCODE
-    $userOut = ($out | &python $pyParse --output)
+    $userOut = ($out | &python $pyParse --output) -join "`n"
     if (![String]::IsNullOrWhitespace($userOut)) {
         Write-Host $userOut
     }
@@ -32,7 +32,12 @@ Set-Alias -Name quik -Value Invoke-Quik
 
 Register-ArgumentCompleter -Native -CommandName quik -ScriptBlock {
     param($commandName, $wordToComplete, $cursorPosition)
-    $completion = &python $pyParse --complete="$wordToComplete"
+    # The trailing space is important to let the autocomplete script know if we are
+    # looking for the next word or the completion of the current word.
+    if ($cursorPosition -gt $wordToComplete.Length) {
+        $wordToComplete = "$wordToComplete "
+    }
+    [array]$completion = (&python $pyParse --complete="$wordToComplete")
     if ($LASTEXITCODE -eq 0) {
         $completion
     } else {
