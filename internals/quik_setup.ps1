@@ -28,19 +28,33 @@ function Invoke-Quik {
     $LASTEXITCODE=$exitcode
 }
 
-Set-Alias -Name quik -Value Invoke-Quik
+function Register-QuikAlias {
+    param(
+        [String]$Name
+    )
 
-Register-ArgumentCompleter -Native -CommandName quik -ScriptBlock {
-    param($commandName, $wordToComplete, $cursorPosition)
-    # The trailing space is important to let the autocomplete script know if we are
-    # looking for the next word or the completion of the current word.
-    if ($cursorPosition -gt $wordToComplete.Length) {
-        $wordToComplete = "$wordToComplete "
-    }
-    [array]$completion = (&python $pyParse --complete="$wordToComplete")
-    if ($LASTEXITCODE -eq 0) {
-        $completion
-    } else {
-        Get-ChildItem ".\$wordToComplete*" -Directory | ForEach-Object { Resolve-Path -Relative "$_" }
-    }
+    $completionScript = {
+        param($commandName, $wordToComplete, $cursorPosition)
+        # The trailing space is important to let the autocomplete script know if we are
+        # looking for the next word or the completion of the current word.
+        if ($cursorPosition -gt $wordToComplete.Length) {
+            $wordToComplete = "$wordToComplete "
+        }
+        [array]$completion = (&python $pyParse --complete="$wordToComplete" --alias="$Name")
+        if ($LASTEXITCODE -eq 0) {
+            $completion
+        } else {
+            Get-ChildItem ".\$wordToComplete*" -Directory |
+                ForEach-Object { Resolve-Path -Relative "$_" }
+        }
+    }.GetNewClosure()
+    # GetNewClosure is necessary to ensure that $Name preserves its value after going out of scope.
+    # See [https://techstronghold.com/scripting/@rudolfvesely/how-to-copy-values-of-variables-into-powershell-script-block-and-keep-it-intact-remember-it/]
+
+    Set-Alias -Name "$Name" -Value Invoke-Quik -Scope Global
+    Register-ArgumentCompleter -Native -CommandName $Name -ScriptBlock $completionScript
 }
+
+Register-QuikAlias -Name quik
+# To register other aliases, you may call
+# Register-QuikAlias -Name alias
