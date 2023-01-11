@@ -2,12 +2,15 @@
 """A helper file to parse output. You shouldn't be looking at this.
 
 Usage:
-    output_parse [options]
+    output_parse --cd
+    output_parse --output
+    output_parse --complete=<cur> [--alias=<alias>]
 
 Options:
     --cd                Find the directory to change to.
     --output            Find the regular output.
     --complete=<cur>    Suggest completion for the currently typed text.
+    --alias=<alias>     Hint that the completion is being called for a command alias.
 """
 
 import re
@@ -34,6 +37,7 @@ class Graph:
         self.root = root
         self.memoized_trees = {}
         self.connection_graph = {root: []}
+        self.aliases = {}
 
     def to_explicit(self, node):
         if type(node) is Graph.Node:
@@ -46,18 +50,32 @@ class Graph:
     def memoize_tree(self, name, tree):
         self.memoized_trees[name] = tree
 
+    def alias(self, name, alias):
+        self.aliases[alias] = name
+
     def connect(self, this, that):
-        if that in self.memoized_trees:
-            self.connection_graph.setdefault(this, []).append(Graph.MemoizedTree(that))
+        if that in self.aliases:
+            self.connect(self, this, self.aliases[that])
         else:
-            self.connection_graph.setdefault(this, []).append(Graph.Node(that))
-        self.connection_graph.setdefault(that, [])
+            if that in self.memoized_trees:
+                self.connection_graph.setdefault(this, []).append(Graph.MemoizedTree(that))
+            else:
+                self.connection_graph.setdefault(this, []).append(Graph.Node(that))
+            self.connection_graph.setdefault(that, [])
 
     def get_connections(self, name):
-        return [y for x in self.connection_graph.get(name, []) for y in self.to_explicit(x)]
+        if name in self.aliases:
+            return self.get_connections(self.aliases[name])
+        else:
+            return [y for x in self.connection_graph.get(name, [])
+                        for y in self.to_explicit(x)]
 
     def contains(self, name):
-        return name in self.connection_graph or any(name in tree for tree in self.memoized_trees) 
+        if name in self.aliases:
+            return self.contains(self.aliases[name])
+        else:
+            return (name in self.connection_graph
+                    or any(name in tree for tree in self.memoized_trees))
 
 
 def suggest(suggestions):
@@ -68,7 +86,7 @@ def suggest(suggestions):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="output_parse 2.0")
+    arguments = docopt(__doc__, version="output_parse 3.0")
 
     cmd_regex = re.compile(r"^\s*\+(?:cd) \"?(.+?)\"?\s*$\n?", re.MULTILINE)
 
@@ -98,25 +116,23 @@ if __name__ == '__main__':
             from quik import get_aliases, get_quik_json
             return list(get_aliases(get_quik_json(), warn=False).keys())
 
-        grammar_graph = Graph("root")
-        grammar_graph.memoize_tree("aliases", [alias for alias in aliases()])
-        grammar_graph.memoize_tree("cmds",
-                ["add", "--list", "get", "edit", "remove", 
-                    "--help", "-h"])
-        grammar_graph.connect("root", "aliases")
-        grammar_graph.connect("quik", "aliases")
-        grammar_graph.connect("root", "cmds")
-        grammar_graph.connect("quik", "cmds")
-        grammar_graph.connect("add", "--force")
-        grammar_graph.connect("get", "aliases")
-        grammar_graph.connect("edit", "--force")
-        grammar_graph.connect("--force", "aliases")
-        grammar_graph.connect("edit", "aliases")
-        grammar_graph.connect("remove", "aliases")
-
-        #if len(words) == 0 or words[0] != "quik":
-            # That's weird... how are you invoking this?
-            #exit(1)
+        grammar_graph = Graph('root')
+        grammar_graph.memoize_tree('aliases', [alias for alias in aliases()])
+        grammar_graph.memoize_tree('cmds',
+                ['add', '--list', 'get', 'edit', 'remove', 
+                    '--help', '-h'])
+        grammar_graph.connect('root', 'aliases')
+        grammar_graph.connect('root', 'cmds')
+        grammar_graph.connect('add', '--force')
+        grammar_graph.connect('get', 'aliases')
+        grammar_graph.connect('edit', '--force')
+        grammar_graph.connect('--force', 'aliases')
+        grammar_graph.connect('edit', 'aliases')
+        grammar_graph.connect('remove', 'aliases')
+        
+        grammar_graph.alias('root', 'quik')
+        if arguments['--alias'] is not None:
+            grammar_graph.alias('root', arguments['--alias'])
 
         # "Edge" case; doing something like
         #  quik add<tab>
