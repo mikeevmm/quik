@@ -83,6 +83,10 @@ REMOVE_FEEDBACK = lambda alias, old: f"""Excluded {alias}, used to point to
 {ALIAS_ASSIGN(alias, old)}"""
 CD_NO_ALIAS = lambda alias: f"""{alias} is not defined.
 Use `quik add` to add a new alias."""
+CD_ALIAS_SUGGEST = lambda typo, suggestions: f"""{typo} is not defined.
+Did you mean one of
+{suggestions}
+?"""
 
 
 def err_print(msg):
@@ -261,8 +265,20 @@ if __name__ == '__main__':
         cd_alias = arguments['<alias>']
 
         if cd_alias not in alias:
-            err_print(CD_NO_ALIAS(cd_alias))
-            exit(1)
+            # Maybe the user missed a key
+            # If it's unambiguous, cd to that directory anyway
+            compatible = [candidate for candidate in alias
+                        if (candidate.startswith(cd_alias) or
+                            candidate.endswith(cd_alias))]
+            if len(compatible) == 1:
+                cd_alias = compatible[0]
+            else:
+                if len(compatible) > 0:
+                    suggestions = '\n'.join(' - ' + suggestion for suggestion in compatible)
+                    err_print(CD_ALIAS_SUGGEST(cd_alias, suggestions))
+                else:
+                    err_print(CD_NO_ALIAS(cd_alias))
+                exit(1)
         
         # The bash extension will handle it from here.
         print(f"+cd \"{alias[cd_alias]}\"")
