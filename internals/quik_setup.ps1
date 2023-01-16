@@ -2,17 +2,14 @@
 # Its structure is closer to the bash file than to the command prompt file,
 # in terms of the approach taken.
 
-# Get this file's directory
-# While $PSScriptRoot should be available, this should be more backwards compatible.
-# See https://stackoverflow.com/a/3667376 (Roman Kuzmin)
-$scriptPath = Get-Item (Split-Path $MyInvocation.MyCommand.Path -Parent)
+$scriptParent = Split-Path -Parent $PSScriptRoot
 
 # Variables we'll use for invocation
-$pyQuik = Get-Item -Path (Join-Path -Path $scriptPath.parent -ChildPath "quik.py")
-$pyParse = Get-Item -Path (Join-Path -Path $scriptPath -ChildPath "output_parse.py")
+$pyQuik = Get-Item -Path (Join-Path -Path $ScriptParent -ChildPath "quik.py")
+$pyParse = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath "output_parse.py")
 
 # Set the QUIK_JSON environment variable
-$env:QUIK_JSON = Convert-Path -Path (Join-Path -Path $scriptPath.parent -ChildPath "quik.json")
+$env:QUIK_JSON = Convert-Path -Path (Join-Path -Path $scriptParent -ChildPath "quik.json")
 
 function Invoke-Quik {
     $out = (&python $pyQuik @args) -join "`n"
