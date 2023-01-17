@@ -15,6 +15,26 @@ $ pwd
 /home/user/Documents
 ```
 
+Quik is also smart enough to guess what you meant to type if you lost some
+trailing characters:
+
+```shell
+$ pwd
+~
+$ quik --list
+"docs" → "/home/user/Documents"
+$ quik do
+$ pwd
+/ home/user/Documents
+```
+
+Finally, quik [likely](#why-quik) supports autocompletion in your shell:
+
+```shell
+$ quik do<tab>
+$ quik docs
+```
+
 ## Quick Start
 
 ``` shell
